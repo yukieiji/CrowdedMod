@@ -115,6 +115,15 @@ internal static class GenericPatches
         }
     }
 
+    [HarmonyPatch(typeof(LogicOptions), nameof(LogicOptions.MaxPlayers), MethodType.Getter)]
+    public static class ReplaceMaxPlayersPatch
+    {
+        public static void Postfix(ref int __result)
+        {
+            __result = CrowdedModPlugin.MaxPlayers;
+        }
+    }
+
     // Will be patched with signatures later when BepInEx reveals it
     // [HarmonyPatch(typeof(InnerNetServer), nameof(InnerNetServer.HandleNewGameJoin))]
     // public static class InnerNetSerer_HandleNewGameJoin
