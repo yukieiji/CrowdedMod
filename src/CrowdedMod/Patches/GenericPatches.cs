@@ -107,11 +107,11 @@ internal static class GenericPatches
     }
 
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
-    public static class RemoveVanilaServerPatch
+    public static class RemoveVanillaServerPatch
     {
         public static void Postfix()
         {
-            CrowdedModPlugin.RemoveVanilaServer();
+            CrowdedModPlugin.RemoveVanillaServer();
         }
     }
 

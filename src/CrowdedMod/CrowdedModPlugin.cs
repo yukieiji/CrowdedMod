@@ -30,10 +30,10 @@ public partial class CrowdedModPlugin : BasePlugin
 
         Harmony.PatchAll();
 
-        RemoveVanilaServer();
+        RemoveVanillaServer();
     }
 
-    public static void RemoveVanilaServer()
+    public static void RemoveVanillaServer()
     {
         var curRegions = ServerManager.Instance.AvailableRegions;
         ServerManager.Instance.AvailableRegions = curRegions.Where(region => !IsVanillaServer(region)).ToArray();
