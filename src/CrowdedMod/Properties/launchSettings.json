@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CrowdedMod": {
+      "commandName": "Executable",
+      "executablePath": "$(AmongUs)/Among Us.exe"
+    }
+  }
+}
