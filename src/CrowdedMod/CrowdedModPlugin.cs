@@ -23,8 +23,10 @@ public partial class CrowdedModPlugin : BasePlugin
 
     public override void Load()
     {
-        NormalGameOptionsV08.RecommendedImpostors = NormalGameOptionsV08.MaxImpostors = Enumerable.Repeat(127, 127).ToArray();
+        NormalGameOptionsV08.RecommendedImpostors =
+            NormalGameOptionsV08.MaxImpostors = Enumerable.Repeat(127, 127).ToArray();
         NormalGameOptionsV08.MinPlayers = Enumerable.Repeat(4, 127).ToArray();
+        HideNSeekGameOptionsV08.MinPlayers = Enumerable.Repeat(4, 127).ToArray();
 
         Harmony.PatchAll();
     }
