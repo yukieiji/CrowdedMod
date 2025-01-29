@@ -29,5 +29,22 @@ public partial class CrowdedModPlugin : BasePlugin
         HideNSeekGameOptionsV08.MinPlayers = Enumerable.Repeat(4, 127).ToArray();
 
         Harmony.PatchAll();
+
+        RemoveVanilaServer();
     }
+
+    public static void RemoveVanilaServer()
+    {
+        var curRegions = ServerManager.Instance.AvailableRegions;
+        ServerManager.Instance.AvailableRegions = curRegions.Where(region => !IsVanillaServer(region)).ToArray();
+
+        var defaultRegion = ServerManager.DefaultRegions;
+        ServerManager.DefaultRegions = defaultRegion.Where(region => !IsVanillaServer(region)).ToArray();
+    }
+
+    private static bool IsVanillaServer(IRegionInfo regionInfo)
+        => regionInfo.TranslateName is
+            StringNames.ServerAS or
+            StringNames.ServerEU or
+            StringNames.ServerNA;
 }

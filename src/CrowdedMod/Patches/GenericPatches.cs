@@ -106,6 +106,15 @@ internal static class GenericPatches
         }
     }
 
+    [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
+    public static class RemoveVanilaServerPatch
+    {
+        public static void Postfix()
+        {
+            CrowdedModPlugin.RemoveVanilaServer();
+        }
+    }
+
     // Will be patched with signatures later when BepInEx reveals it
     // [HarmonyPatch(typeof(InnerNetServer), nameof(InnerNetServer.HandleNewGameJoin))]
     // public static class InnerNetSerer_HandleNewGameJoin
@@ -138,7 +147,7 @@ internal static class GenericPatches
     //             {
     //                 Debug.LogError("[CM] InnerNetServer::HandleNewGameJoin MessageWriter 2 Exception: " +
     //                                exception.Message);
-    //                 // ama too stupid for this 
+    //                 // ama too stupid for this
     //                 // Debug.LogException(exception.InnerException, __instance);
     //             }
     //             finally
