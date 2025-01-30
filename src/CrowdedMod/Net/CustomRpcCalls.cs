@@ -1,6 +1,6 @@
 ﻿namespace CrowdedMod.Net;
 
-public enum CustomRpcCalls
+public enum CustomRpcCalls : uint
 {
     SetColor
 }
