@@ -4,22 +4,23 @@ on: [ "push", "pull_request" ]
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
+      - uses: nuget/setup-nuget@v2
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: 6.x
+      - run: nuget restore src/CrowdedMod.sln
 
-      - name: Run the Cake script
-        uses: cake-build/cake-action@v1
+      - uses: actions/setup-dotnet@v4
         with:
-          verbosity: Diagnostic
+          dotnet-version: 9.x
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - run: msbuild src/CrowdedMod.sln -t:restore,rebuild -p:Configuration=Release -p:RestorePackagesConfig=true
 
       - uses: actions/upload-artifact@v3
         with:
