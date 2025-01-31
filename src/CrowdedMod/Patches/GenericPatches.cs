@@ -1,6 +1,7 @@
 using AmongUs.GameOptions;
 using CrowdedMod.Net;
 using HarmonyLib;
+using InnerNet;
 using Reactor.Networking.Rpc;
 using System.Linq;
 
@@ -15,6 +16,24 @@ internal static class GenericPatches
         {
             Rpc<SetColorRpc>.Instance.Send(__instance, colorId);
             return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.UpdateCachedClients))]
+    public static class InnerNetClientUpdateCachedClientsPatch
+    {
+        public static void Prefix(
+            [HarmonyArgument(0)] ClientData clientData,
+            [HarmonyArgument(1)] PlayerControl character)
+        {
+            var localPlayer = PlayerControl.LocalPlayer;
+            if (localPlayer == null ||
+                localPlayer == character)
+            {
+                return;
+            }
+            Rpc<SetColorRpc>.Instance.Send(
+                localPlayer, (byte)localPlayer.Data.DefaultOutfit.ColorId);
         }
     }
 
