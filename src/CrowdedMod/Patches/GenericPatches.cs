@@ -95,7 +95,7 @@ internal static class GenericPatches
                 return;
             }
 
-            __instance.PlayerCounter.text = $"{fixDummyCounterColor}{GameData.Instance.PlayerCount}/{GameManager.Instance.LogicOptions.MaxPlayers}";
+            __instance.PlayerCounter.text = $"{fixDummyCounterColor}{GameData.Instance.PlayerCount}/{CrowdedModPlugin.MaxPlayers}";
             fixDummyCounterColor = string.Empty;
         }
     }
@@ -115,15 +115,6 @@ internal static class GenericPatches
         public static void Postfix()
         {
             CrowdedModPlugin.RemoveVanillaServer();
-        }
-    }
-
-    [HarmonyPatch(typeof(LogicOptions), nameof(LogicOptions.MaxPlayers), MethodType.Getter)]
-    public static class ReplaceMaxPlayersPatch
-    {
-        public static void Postfix(ref int __result)
-        {
-            __result = CrowdedModPlugin.MaxPlayers;
         }
     }
 
