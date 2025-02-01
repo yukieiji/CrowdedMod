@@ -35,11 +35,17 @@ public partial class CrowdedModPlugin : BasePlugin
 
     public static void RemoveVanillaServer()
     {
-        var curRegions = ServerManager.Instance.AvailableRegions;
-        ServerManager.Instance.AvailableRegions = curRegions.Where(region => !IsVanillaServer(region)).ToArray();
+        var sm = ServerManager.Instance;
+        var curRegions = sm.AvailableRegions;
+        sm.AvailableRegions = curRegions.Where(region => !IsVanillaServer(region)).ToArray();
 
         var defaultRegion = ServerManager.DefaultRegions;
         ServerManager.DefaultRegions = defaultRegion.Where(region => !IsVanillaServer(region)).ToArray();
+
+        if (IsVanillaServer(sm.CurrentRegion))
+        {
+            sm.CurrentRegion = sm.AvailableRegions.FirstOrDefault();
+        }
     }
 
     private static bool IsVanillaServer(IRegionInfo regionInfo)
