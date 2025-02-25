@@ -107,14 +107,16 @@ internal static class GenericPatches
         public static void Postfix(GameStartManager __instance)
         {
             if (GameData.Instance == null ||
+                AmongUsClient.Instance == null ||
                 GameManager.Instance == null ||
                 GameManager.Instance.LogicOptions == null ||
                 string.IsNullOrEmpty(fixDummyCounterColor))
             {
                 return;
             }
-
-            __instance.PlayerCounter.text = $"{fixDummyCounterColor}{GameData.Instance.PlayerCount}/{CrowdedModPlugin.MaxPlayers}";
+            int maxPlayerNum = AmongUsClient.Instance.NetworkMode is NetworkModes.LocalGame ?
+                CrowdedModPlugin.MaxPlayers : GameManager.Instance.LogicOptions.MaxPlayers;
+            __instance.PlayerCounter.text = $"{fixDummyCounterColor}{GameData.Instance.PlayerCount}/{maxPlayerNum}";
             fixDummyCounterColor = string.Empty;
         }
     }
