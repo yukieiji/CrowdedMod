@@ -27,5 +27,29 @@ public partial class CrowdedModPlugin : BasePlugin
         NormalGameOptionsV08.MinPlayers = Enumerable.Repeat(4, 127).ToArray();
 
         Harmony.PatchAll();
+
+        RemoveVanillaServer();
     }
+
+    public static void RemoveVanillaServer()
+    {
+        var sm = ServerManager.Instance;
+        var curRegions = sm.AvailableRegions;
+        sm.AvailableRegions = curRegions.Where(region => !IsVanillaServer(region)).ToArray();
+
+        var defaultRegion = ServerManager.DefaultRegions;
+        ServerManager.DefaultRegions = defaultRegion.Where(region => !IsVanillaServer(region)).ToArray();
+
+        if (IsVanillaServer(sm.CurrentRegion))
+        {
+            var region = defaultRegion.FirstOrDefault();
+            sm.SetRegion(region);
+        }
+    }
+
+    private static bool IsVanillaServer(IRegionInfo regionInfo)
+        => regionInfo.TranslateName is
+            StringNames.ServerAS or
+            StringNames.ServerEU or
+            StringNames.ServerNA;
 }
