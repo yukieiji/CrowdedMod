@@ -44,7 +44,8 @@ public partial class CrowdedModPlugin : BasePlugin
 
         if (IsVanillaServer(sm.CurrentRegion))
         {
-            sm.CurrentRegion = sm.AvailableRegions.FirstOrDefault();
+            var region = defaultRegion.FirstOrDefault();
+            sm.SetRegion(region);
         }
     }
 
