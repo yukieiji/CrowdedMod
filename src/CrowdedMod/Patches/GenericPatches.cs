@@ -244,7 +244,8 @@ internal static class GenericPatches
             {
                 foreach (var option in category.AllGameSettings)
                 {
-                    if (option is IntGameSetting intOption && option.Title == StringNames.GameNumImpostors)
+                    var intOption = option.TryCast<IntGameSetting>();
+                    if (intOption != null && option.Title == StringNames.GameNumImpostors)
                     {
                         intOption.ValidRange = new IntRange(1, CrowdedModPlugin.MaxImpostors);
                         return;
