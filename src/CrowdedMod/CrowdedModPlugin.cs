@@ -5,7 +5,9 @@ using Reactor;
 using Reactor.Networking;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
+using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 namespace CrowdedMod;
 
@@ -29,7 +31,13 @@ public partial class CrowdedModPlugin : BasePlugin
 
         Harmony.PatchAll();
 
-        RemoveVanillaServer();
+        SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>)((scene, _) =>
+        {
+            if (scene.name == "MainMenu")
+            {
+                RemoveVanillaServer();
+            }
+        }));
     }
 
     public static void RemoveVanillaServer()
