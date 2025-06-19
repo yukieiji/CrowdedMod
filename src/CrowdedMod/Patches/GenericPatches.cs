@@ -1,5 +1,6 @@
 using System.Linq;
 using AmongUs.GameOptions;
+using AmongUs.Data;
 using CrowdedMod.Net;
 using HarmonyLib;
 using Hazel;
@@ -73,18 +74,26 @@ internal static class GenericPatches
 
     // I did not find a use of this method, but still patching for future updates
     // maxExpectedPlayers is unknown, looks like server code tbh
-    [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.AreInvalid))]
-    public static class InvalidOptionsPatches
+    [HarmonyPatch(typeof(HideNSeekGameOptionsV09), nameof(HideNSeekGameOptionsV09.AreInvalid))]
+    public static class InvalidHnSOptionsPatches
     {
-        public static bool Prefix(GameOptionsData __instance, [HarmonyArgument(0)] int maxExpectedPlayers)
-        {
-            return __instance.MaxPlayers > maxExpectedPlayers ||
-                   __instance.NumImpostors < 1 ||
-                   __instance.NumImpostors + 1 > maxExpectedPlayers / 2 ||
-                   __instance.KillDistance is < 0 or > 2 ||
-                   __instance.PlayerSpeedMod is <= 0f or > 3f;
-        }
+        public static bool Prefix(HideNSeekGameOptionsV09 __instance, [HarmonyArgument(0)] int maxExpectedPlayers)
+            => IsOptionValid(__instance.Cast<IGameOptions>(), maxExpectedPlayers);
     }
+
+    [HarmonyPatch(typeof(NormalGameOptionsV09), nameof(NormalGameOptionsV09.AreInvalid))]
+    public static class InvalidNormalOptionsPatches
+    {
+        public static bool Prefix(NormalGameOptionsV09 __instance, [HarmonyArgument(0)] int maxExpectedPlayers)
+            => IsOptionValid(__instance.Cast<IGameOptions>(), maxExpectedPlayers);
+    }
+
+    private static bool IsOptionValid(IGameOptions option, int maxExpectedPlayers)
+        => option.MaxPlayers > maxExpectedPlayers ||
+            option.NumImpostors < 1 ||
+            option.NumImpostors + 1 > maxExpectedPlayers / 2 ||
+            option.GetInt(Int32OptionNames.KillDistance) is < 0 or > 2 ||
+            option.GetFloat(FloatOptionNames.PlayerSpeedMod) is <= 0f or > 3f;
 
     [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
     public static class GameStartManagerUpdatePatch
