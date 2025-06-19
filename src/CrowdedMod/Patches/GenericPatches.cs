@@ -139,15 +139,6 @@ internal static class GenericPatches
         }
     }
 
-    [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
-    public static class RemoveVanillaServerPatch
-    {
-        public static void Postfix()
-        {
-            CrowdedModPlugin.RemoveVanillaServer();
-        }
-    }
-
     // Will be patched with signatures later when BepInEx reveals it
     // [HarmonyPatch(typeof(InnerNetServer), nameof(InnerNetServer.HandleNewGameJoin))]
     // public static class InnerNetSerer_HandleNewGameJoin
