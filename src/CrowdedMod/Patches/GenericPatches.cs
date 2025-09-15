@@ -74,17 +74,17 @@ internal static class GenericPatches
 
     // I did not find a use of this method, but still patching for future updates
     // maxExpectedPlayers is unknown, looks like server code tbh
-    [HarmonyPatch(typeof(HideNSeekGameOptionsV09), nameof(HideNSeekGameOptionsV09.AreInvalid))]
+    [HarmonyPatch(typeof(HideNSeekGameOptionsV10), nameof(HideNSeekGameOptionsV10.AreInvalid))]
     public static class InvalidHnSOptionsPatches
     {
-        public static bool Prefix(HideNSeekGameOptionsV09 __instance, [HarmonyArgument(0)] int maxExpectedPlayers)
+        public static bool Prefix(HideNSeekGameOptionsV10 __instance, [HarmonyArgument(0)] int maxExpectedPlayers)
             => IsOptionValid(__instance.Cast<IGameOptions>(), maxExpectedPlayers);
     }
 
-    [HarmonyPatch(typeof(NormalGameOptionsV09), nameof(NormalGameOptionsV09.AreInvalid))]
+    [HarmonyPatch(typeof(NormalGameOptionsV10), nameof(NormalGameOptionsV10.AreInvalid))]
     public static class InvalidNormalOptionsPatches
     {
-        public static bool Prefix(NormalGameOptionsV09 __instance, [HarmonyArgument(0)] int maxExpectedPlayers)
+        public static bool Prefix(NormalGameOptionsV10 __instance, [HarmonyArgument(0)] int maxExpectedPlayers)
             => IsOptionValid(__instance.Cast<IGameOptions>(), maxExpectedPlayers);
     }
 
@@ -156,7 +156,6 @@ internal static class GenericPatches
             {
                 client.LimboState = LimboStates.NotLimbo;
             }
-
             var writer = MessageWriter.Get(SendOption.Reliable);
             try
             {
@@ -176,6 +175,19 @@ internal static class GenericPatches
             }
 
             return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(CreateGameOptions), nameof(CreateGameOptions.Show))]
+    public static class CreateGameOptionsShowPatch
+    {
+        public static void Postfix(CreateGameOptions __instance)
+        {
+            var numberOption = __instance.gameObject.GetComponentInChildren<NumberOption>(true);
+            if (numberOption != null)
+            {
+                numberOption.ValidRange.max = CrowdedModPlugin.MaxPlayers;
+            }
         }
     }
 
