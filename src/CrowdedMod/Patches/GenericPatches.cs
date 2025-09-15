@@ -181,6 +181,7 @@ internal static class GenericPatches
     [HarmonyPatch(typeof(CreateGameOptions), nameof(CreateGameOptions.Show))]
     public static class CreateGameOptionsShowPatch
     {
+        [HarmonyPostfix, HarmonyPriority(Priority.Last)]
         public static void Postfix(CreateGameOptions __instance)
         {
             var numberOption = __instance.gameObject.GetComponentInChildren<NumberOption>(true);
@@ -250,6 +251,7 @@ internal static class GenericPatches
     [HarmonyPatch(typeof(GameManager), nameof(GameManager.Awake))]
     public static class GameManager_Awake
     {
+        [HarmonyPostfix, HarmonyPriority(Priority.Last)]
         public static void Postfix(GameManager __instance)
         {
             foreach (var category in __instance.GameSettingsList.AllCategories)
