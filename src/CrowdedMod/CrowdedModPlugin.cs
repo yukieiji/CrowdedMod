@@ -26,10 +26,10 @@ public partial class CrowdedModPlugin : BasePlugin
 
     public override void Load()
     {
-        NormalGameOptionsV09.RecommendedImpostors =
-            NormalGameOptionsV09.MaxImpostors = Enumerable.Repeat(127, 127).ToArray();
-        NormalGameOptionsV09.MinPlayers = Enumerable.Repeat(4, 127).ToArray();
-        HideNSeekGameOptionsV09.MinPlayers = Enumerable.Repeat(4, 127).ToArray();
+        NormalGameOptionsV10.RecommendedImpostors =
+            NormalGameOptionsV10.MaxImpostors = Enumerable.Repeat(127, 127).ToArray();
+        NormalGameOptionsV10.MinPlayers = Enumerable.Repeat(4, 127).ToArray();
+        HideNSeekGameOptionsV10.MinPlayers = Enumerable.Repeat(4, 127).ToArray();
 
         Harmony.PatchAll();
         SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>)((scene, _) =>
