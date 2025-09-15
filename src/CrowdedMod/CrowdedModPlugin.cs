@@ -18,7 +18,7 @@ namespace CrowdedMod;
 [BepInDependency("gg.reactor.debugger", BepInDependency.DependencyFlags.SoftDependency)]
 public partial class CrowdedModPlugin : BasePlugin
 {
-    public const int MaxPlayers = 254; // allegedly. should stick to 127 tho
+    public const int MaxPlayers = 250; // allegedly. should stick to 127 tho
     public const int MaxImpostors = MaxPlayers / 2;
 
     public static bool ForceDisableFreeColor { get; set; } = false;
