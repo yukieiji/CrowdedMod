@@ -209,7 +209,7 @@ internal static class GenericPatches
             var impostorsOption = numberOptions.FirstOrDefault(o => o.Title == StringNames.GameNumImpostors);
             if (impostorsOption != null)
             {
-                impostorsOption.ValidRange = new FloatRange(1, CrowdedModPlugin.MaxImpostors);
+                impostorsOption.ValidRange.max =  CrowdedModPlugin.MaxImpostors;
             }
 
         }
