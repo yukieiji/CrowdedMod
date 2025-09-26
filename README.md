@@ -1,3 +1,14 @@
+# CrowdedMod Forked
+
+
+## Versions
+| Mod version   | Game version  | BepInEx | Downloads |
+| ------------- | ------------- | ------- | --------- |
+| v2.9.4   | v16+(v2025.4.15)    |  [BepInEx CoreCLR](https://builds.bepinex.dev/projects/bepinex_be/660/BepInEx-Unity.IL2CPP-win-x86-6.0.0-be.660%2B40bf261.zip) | [GitHub](https://github.com/yukieiji/CrowdedMod/releases/tag/v2.9.4) |
+| v2.9.1 ～ v2.9.2   | v2024.9.4+    |  [BepInEx CoreCLR](https://builds.bepinex.dev/projects/bepinex_be/660/BepInEx-Unity.IL2CPP-win-x86-6.0.0-be.660%2B40bf261.zip) | [GitHub](https://github.com/yukieiji/CrowdedMod/releases/tag/v2.9.2) |
+
+## Original Readme
+
 [![Our Discord](https://img.shields.io/discord/787008412482797598?color=7289da&label=DISCORD&style=for-the-badge)](https://discord.gg/XEc7PdDTyn)
 # CrowdedMod
 This mod unlocks the possibility for more than 15 player to join in an Among Us lobby.
